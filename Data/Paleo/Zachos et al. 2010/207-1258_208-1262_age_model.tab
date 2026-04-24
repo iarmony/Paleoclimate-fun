@@ -1,0 +1,52 @@
+/* DATA DESCRIPTION:
+Citation:	Niederbockstruck, Bryan; Jones, Heather; Yasukawa, K; Raffi, Isabella; Tanaka, E; Westerhold, Thomas; Ikehara, Minoru; Röhl, Ursula (2024): Hyperthermals and the bulk sediment δ13C tie points from IODP Site U1553 correlated to records of ODP Site 207-1258 and 208-126 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.963457, 
+	In: Niederbockstruck, B et al. (2024): Late Paleocene to early Eocene stable isotope records and calcareous nannofossil datums at IODP Site U1553 [dataset bundled publication]. PANGAEA, https://doi.org/10.1594/PANGAEA.963554
+Keyword(s):	Age model; calcareous nannofossil; d13C; Eocene; IODP 378; Paleocene; PETM; Site 1553
+Source:	Kirtland Turner, Sandra; Sexton, Philip F; Charles, Christopher D; Norris, Richard D (2014): Persistence of carbon release events through the peak of early Eocene global warmth. Nature Geoscience, 7(10), 748-751, https://doi.org/10.1038/ngeo2240
+	Westerhold, Thomas; Röhl, Ursula; Frederichs, Thomas; Agnini, Claudia; Raffi, Isabella; Zachos, James C; Wilkens, Roy H (2017): Astronomical calibration of the Ypresian timescale: implications for seafloor spreading rates and the chaotic behavior of the solar system? Climate of the Past, 13, 1129-1152, https://doi.org/10.5194/cp-13-1129-2017
+	Zachos, James C; McCarren, Heather K; Murphy, Brandon; Röhl, Ursula; Westerhold, Thomas (2010): Tempo and scale of late Paleocene and early Eocene carbon isotope cycles: Implications for the origin of hyperthermals. Earth and Planetary Science Letters, 299(1-2), 242-249, https://doi.org/10.1016/j.epsl.2010.09.004
+Project(s):	Center for Marine Environmental Sciences (MARUM) (URI: https://www.marum.de/en/)
+Funding:	German Research Foundation (DFG) (URI: http://www.dfg.de/en/), grant/award no. 390741603: EXC 2077: The Ocean Floor – Earth's Uncharted Interface (URI: https://gepris.dfg.de/gepris/projekt/390741603)
+	Japan Society for the Promotion of Science (JSPS) (URI: https://www.jsps.go.jp/english/), grant/award no. 20H02678: Causality between greenhouse world and genesis of a resource for rare-earth elements deciphered by high-precision geochemical analyses and mathematical methods (URI: https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-20H02678)
+Coverage:	MEDIAN LATITUDE: -8.876250 * MEDIAN LONGITUDE: -26.578025 * SOUTH-BOUND LATITUDE: -27.185833 * WEST-BOUND LONGITUDE: -54.733050 * NORTH-BOUND LATITUDE: 9.433333 * EAST-BOUND LONGITUDE: 1.577000
+	DATE/TIME START: 2003-01-22T00:00:00 * DATE/TIME END: 2003-03-29T00:00:00
+	MINIMUM DEPTH, sediment/rock: 409.505 m * MAXIMUM DEPTH, sediment/rock: 456.805 m
+Event(s):	207-1258 * LATITUDE: 9.433333 * LONGITUDE: -54.733050 * DATE/TIME START: 2003-01-22T00:00:00 * DATE/TIME END: 2003-02-01T00:00:00 * ELEVATION: -3192.2 m * Penetration: 1393.4 m * Recovery: 882.7 m * LOCATION: North Atlantic Ocean * CAMPAIGN: Leg207 (URI: https://doi.org/10.2973/odp.proc.ir.207.2004) * BASIS: Joides Resolution (URI: https://www-odp.tamu.edu:443/resolutn.html) * METHOD/DEVICE: Composite Core (COMPCORE) * COMMENT: 141 cores; 1116.6 m cored; 276.8 m drilled; 79 % recovery
+	208-1262 * LATITUDE: -27.185833 * LONGITUDE: 1.577000 * DATE/TIME START: 2003-03-24T00:00:00 * DATE/TIME END: 2003-03-29T00:00:00 * ELEVATION: -4755.4 m * Penetration: 583.9 m * Recovery: 502.5 m * LOCATION: Walvis Ridge, Southeast Atlantic Ocean * CAMPAIGN: Leg208 (URI: https://doi.org/10.2973/odp.proc.ir.208.2004) * BASIS: Joides Resolution (URI: https://www-odp.tamu.edu:443/resolutn.html) * METHOD/DEVICE: Composite Core (COMPCORE) * COMMENT: 54 cores; 493.9 m cored; 90 m drilled; 101.7 % recovery
+Comment:	Age model. Hyperthermals (Hyp) and the bulk sediment δ13C records from ODP Site1258 and 1262 were correlated to our record. This table provides the tie points in order to generate the age model.
+	Hyp=Hyperthermal
+	δ13C corr= correlation
+Parameter(s):	Event label (Event) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de)
+	Geological event (Geological e) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de)
+	Name (Name) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de)
+	Sample code/label (Sample label) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de)
+	DEPTH, sediment/rock [m] (Depth sed) * GEOCODE * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de) * COMMENT: CSF-A
+	Depth, composite [mcd] (Depth comp) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de) * COMMENT: CCSF
+	Age [Ma] (Age) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de)
+	Site (Site) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de) * COMMENT: Reference Site
+	Reference/source (Reference) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de) * COMMENT: Age Source
+	Reference/source (Reference) * PI: Niederbockstruck, Bryan (https://orcid.org/0000-0002-5460-9298, bniederbockstruck@marum.de)
+License:	Creative Commons Attribution 4.0 International (CC-BY-4.0) (URI: https://creativecommons.org/licenses/by/4.0/)
+Status:	Curation Level: Enhanced curation (URI: https://wiki.pangaea.de/wiki/Curation_levels)
+Size:	152 data points
+*/
+Event	Geological e	Name	Sample label	Depth sed [m] (CSF-A)	Depth comp [mcd] (CCSF)	Age [Ma]	Site (Reference Site)	Reference (Age Source)	Reference
+207-1258	Hyp	S	378-U1553C-26R-1,40-41 cm	409.505	440.845	50.485	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	δ13C corr	-	378-U1553D-3R-2,60-61 cm	411.205	442.545	50.670	ODP Site 1258	Kirtland Turner et al., 2014	doi:10.1038/ngeo2240
+207-1258	Hyp	N	378-U1553C-27R-2,37-38 cm	420.605	451.945	51.550	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	Hyp	M	378-U1553D-4R-3,125-126 cm	422.915	454.255	51.970	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	Hyp	L	378-U1553D-4R-6,75-76 cm	426.605	457.945	52.460	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	Hyp	K/ ETM-3	378-U1553D-5R-2,43-44 cm	430.305	460.625	52.845	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	Hyp	J	378-U1553C-28R-4,17-18 cm	433.255	464.085	53.260	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	Hyp	I2	378-U1553C-28R-5,109-110 cm	435.685	466.515	53.545	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+207-1258	Hyp	I1	378-U1553C-28R-6,99-100 cm	437.005	467.835	53.665	ODP Site 1258	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+208-1262	Hyp	H2	378-U1553C-29R-2,59-60 cm	440.405	470.905	53.950	ODP Site 1262	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+208-1262	Hyp	H1/ ETM-2	378-U1553C-29R-3,8-9 cm	441.305	471.805	54.050	ODP Site 1262	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+208-1262	δ13C corr	PETM rec end	378-U1553D-7R-1,0-1 cm	448.105	480.735	55.770	ODP Site 1262	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+208-1262	Hyp	PETM/ ETM-1	378-U1553D-7R-2,5-6 cm	449.455	482.085	55.930	ODP Site 1262	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+208-1262	δ13C corr	PETM onset	378-U1553C-31R-2,47-48 cm	449.905	482.575	55.980	ODP Site 1262	Westerhold et al., 2017	doi:10.5194/cp-13-1129-2017
+208-1262	δ13C corr	-	378-U1553D-7R-3,71-72 cm	451.605	484.235	56.379	ODP Site 1262	Zachos et al., 2010	doi:10.1016/j.epsl.2010.09.004
+208-1262	δ13C corr	-	378-U1553D-7R-3,121-122 cm	452.105	484.735	56.497	ODP Site 1262	Zachos et al., 2010	doi:10.1016/j.epsl.2010.09.004
+208-1262	δ13C corr	-	378-U1553D-7R-9,35-36 cm	453.605	486.235	56.690	ODP Site 1262	Zachos et al., 2010	doi:10.1016/j.epsl.2010.09.004
+208-1262	δ13C corr	-	378-U1553C-32R-2,30-31 cm	454.605	487.475	56.861	ODP Site 1262	Zachos et al., 2010	doi:10.1016/j.epsl.2010.09.004
+208-1262	δ13C corr	-	378-U1553C-32R-3,129-130 cm	456.805	489.675	57.220	ODP Site 1262	Zachos et al., 2010	doi:10.1016/j.epsl.2010.09.004
