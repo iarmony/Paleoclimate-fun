@@ -39,6 +39,70 @@ bulk_stable%>%
 
 ```
 
+### Jiang et al
+
+```{r}
+library(readxl)
+#Dataset1 sheets
+bulk_carbonate <- read_excel("../Data/Paleo/Jiang et al/Dataset1.xlsx")
+organic_hg <- read_excel("../Data/Paleo/Jiang et al/Dataset1.xlsx", sheet = "Bulk organic & Hg")
+alkane_d13c <- read_excel("../Data/Paleo/Jiang et al/Dataset1.xlsx", sheet = "alkane d13C")
+Apolar_biomarker <- read_excel("../Data/Paleo/Jiang et al/Dataset1.xlsx", sheet = "Apolar biomarker")
+GDGT <- read_excel("../Data/Paleo/Jiang et al/Dataset1.xlsx", sheet = "GDGT data")
+clumped_isotope <- read_excel("../Data/Paleo/Jiang et al/Dataset1.xlsx", sheet = "Clumped isotope")
+#Dataset2 sheet
+age_model <- read_excel("../Data/Paleo/Jiang et al/Dataset2.xlsx")
+colnames(age_model)[3] <- "age_model_1"
+colnames(age_model)[4] <- "age_model_2"
+```
+
+C13 and O18 carbonate over time
+
+```{r}
+bulk_carbonate_joined <- bulk_carbonate%>%
+  left_join(age_model, by = join_by(`Sample NO.`))
+
+bulk_carbonate_joined <- bulk_carbonate_joined%>%
+  filter(!is.na(age_model_1))%>%
+  select(`Sample NO.`,`Depth (m)`, age_model_1, `δ13Ccarb`, `δ18Ocarb`, Comment)
+
+bulk_carbonate_joined%>%
+  ggplot(aes(x = age_model_1, y = δ18Ocarb, color = Comment))+
+  geom_point()+
+  theme_minimal()
+
+bulk_carbonate_joined%>%
+  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment))+
+  geom_point()+
+  theme_minimal()
+```
+
+TOC%, Hg/TOC, CaCO3
+
+```{r}
+organic_hg <- organic_hg%>%
+  mutate(`TOC%` = as.numeric(`TOC%`))
+
+organic_hg_joined <- organic_hg%>%
+  left_join(age_model, by = join_by(`Sample NO.`))
+
+organic_hg_joined <- organic_hg_joined%>%
+  filter(!is.na(age_model_1))%>%
+  select(`Sample NO.`,`Depth (m)`, age_model_1, `wt.%CaCO3`, `TOC%`, `Hg (μg/kg, ppb)`, Comments)
+
+organic_hg_joined%>%
+  ggplot(aes(x = age_model_1, y = `wt.%CaCO3`, color = Comments))+
+  geom_point()+
+  theme_minimal()
+
+organic_hg_joined%>%
+  ggplot(aes(x = age_model_1, y = `TOC%`))+
+  geom_line()+
+  theme_minimal()
+```
+
+
+
 ## Modern
 
 ```{r}
