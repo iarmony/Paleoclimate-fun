@@ -3,3 +3,61 @@ title: "graphs"
 format: html
 ---
 
+```{r}
+library(tidyverse)
+```
+
+## Paleo
+
+### Zachos_2010
+
+```{r}
+isotopes <- read_tsv("../Data/Paleo/Zachos et al. 2010/208-1262_isotope.tab", skip = 20)
+bulk_stable <- read_tsv("../Data/Paleo/Zachos et al. 2010/208-1262_bulk_stable_isotope.tab", skip = 23)
+age_model <- read_tsv("../Data/Paleo/Zachos et al. 2010/207-1258_208-1262_age_model.tab", skip = 32)
+zachos <- read_tsv("../Data/Paleo/Zachos et al. 2010/Zachos_2010.tab", skip = 23)
+```
+
+
+Bulk stable is what we want: `isotopes` extends to older ages, which we don't care about. `Zachos` is data only from Zachos, whereas `isotopes` also includes other papers.
+
+```{r}
+bulk_stable <- bulk_stable%>%
+  mutate(delta_c_13 = `δ13C [‰ PDB]`,
+         delta_o_18 = `δ18O [‰]`)
+
+bulk_stable%>%
+  # filter( `Age [ka BP]` > 55350 & `Age [ka BP]` < 55600)%>%
+  ggplot(aes(x = `Age [ka BP]`, y = delta_c_13))+
+  geom_line()+
+  theme_minimal()
+
+bulk_stable%>%
+  ggplot(aes(x = `Age [ka BP]`, y = delta_o_18))+
+  geom_line()+
+  theme_minimal()
+
+```
+
+## Modern
+
+```{r}
+library(ncdf4)
+temp_ocean <- read_csv("../Data/Modern/avg_temp_anomaly_ocean.csv", skip = 3)
+
+temp_ocean <- temp_ocean%>%
+  mutate(Date = str_c(str_extract(Date, "\\d{4}"), str_extract(Date, "(?<=\\d{4}).*"), sep = "-"),
+         Date = ym(Date))
+
+temp_land <- read_csv("../Data/Modern/avg_temp_anomaly_land.csv", skip = 3)
+
+temp_land <- temp_land%>%
+  mutate(Date = str_c(str_extract(Date, "\\d{4}"), str_extract(Date, "(?<=\\d{4}).*"), sep = "-"),
+         Date = ym(Date))
+
+co2 <- read_csv("../Data/Modern/co2_annmean_mlo.csv", skip = 43)
+```
+
+
+
+
