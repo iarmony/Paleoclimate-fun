@@ -6,6 +6,8 @@ format: html
 ```{r}
 library(tidyverse)
 ```
+# Data
+
 
 ## Paleo
 
@@ -67,14 +69,36 @@ bulk_carbonate_joined <- bulk_carbonate_joined%>%
   select(`Sample NO.`,`Depth (m)`, age_model_1, `δ13Ccarb`, `δ18Ocarb`, Comment)
 
 bulk_carbonate_joined%>%
-  ggplot(aes(x = age_model_1, y = δ18Ocarb, color = Comment))+
+  mutate(Comment2 = coalesce(Comment, "NoPhase")) %>% 
+  ggplot(aes(x = age_model_1, y = δ18Ocarb, color = Comment2))+
   geom_point()+
-  theme_minimal()
+  labs(title="δ18O during the POE and PETM", subtitle="Data from Jiang et al. 2025", x="kyr relative to onset of PETM", y="δ18O ‰", color="Phase") +
+    scale_color_manual(
+    values = c(
+      "PETM" = "#0072B2",
+      "PETM onset" = "#009E73",
+      "POE" = "#E69F00",
+      "NoPhase" = "darkgray"
+    ),
+    breaks = c("POE", "PETM onset", "PETM")) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold")) 
 
 bulk_carbonate_joined%>%
-  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment))+
+  mutate(Comment2 = coalesce(Comment, "NoPhase")) %>% 
+  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment2))+
   geom_point()+
-  theme_minimal()
+    labs(title="δ13C during the POE and PETM", subtitle="Data from Jiang et al. 2025", x="kyr relative to onset of PETM", y="δ13C ‰", color="Phase") +
+  scale_color_manual(
+    values = c(
+      "PETM" = "#0072B2",
+      "PETM onset" = "#009E73",
+      "POE" = "#E69F00",
+      "NoPhase" = "darkgray"
+    ),
+    breaks = c("POE", "PETM onset", "PETM")) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold")) 
 ```
 
 TOC%, Hg/TOC, CaCO3
@@ -102,7 +126,6 @@ organic_hg_joined%>%
 ```
 
 
-
 ## Modern
 
 ```{r}
@@ -122,8 +145,85 @@ temp_land <- temp_land%>%
 co2 <- read_csv("../Data/Modern/monthly_in_situ_co2_mlo.csv", skip = 61) #Column 5 is what we want
 monthly_O18 <- read_csv("../Data/Modern/monthly_flask_o18_mlo.csv", skip = 58) #Column 5 is what we want
 monthly_C13 <- read_csv("../Data/Modern/monthly_flask_c13_mlo.csv", skip = 58) #Column 5 is what we want
+
+
 ```
 
 
+# Viz
+
+## Rate plot
+
+### Modern
+
+```{r}
+monthly_C13 <- monthly_C13[-1:-2,]%>%
+  mutate(delta_13_c = `13C...5`,
+         numeric_date = Date...4)%>%
+  select(Yr, Mn, numeric_date, delta_13_c)
+
+monthly_C13_rate <- monthly_C13%>%
+  filter(delta_13_c != "NaN")%>%
+  mutate(delta_13_c = as.numeric(delta_13_c),
+         monthly_rate_change = delta_13_c - lag(delta_13_c, 1))%>%
+  mutate(date = as_date(date_decimal(numeric_date)))%>%
+  group_by(Yr)%>%
+  summarize(avg_c13 = mean(delta_13_c))%>%
+  mutate(yearly_rate_change = avg_c13 - lag(avg_c13, 1))
+
+monthly_C13_rate%>%
+  ggplot(aes(x = Yr, y = avg_c13))+
+  geom_point()+
+  theme_minimal()
+```
+
+### POE
+
+```{r}
+bulk_carbonate_joined%>%
+  filter(Comment == "POE")%>%
+  ggplot(aes(x = age_model_1, y = δ13Ccarb))+
+  geom_point()+
+  theme_minimal()
+
+bulk_carbonate_joined_POE <- bulk_carbonate_joined[7:37, ]
+
+bulk_carbonate_joined_POE%>%
+  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment))+
+  geom_point()+
+  theme_minimal()
+
+regression_POE <- bulk_carbonate_joined_POE[8:21, ]
+
+poe_model <- lm(δ13Ccarb ~ age_model_1, data = regression_POE)
+
+regression_POE <- regression_POE%>%
+  mutate(predicted_c13 = fitted(poe_model))
+
+slope <- round(coef(poe_model)[2], 3)
+
+bulk_carbonate_joined_POE%>%
+  mutate(Comment2 = coalesce(Comment, "NoPhase"))%>%
+  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment2))+
+  geom_point(size = 2)+
+  geom_line(aes(x = age_model_1, y = predicted_c13), data = regression_POE, color = "#E69F00", linewidth = 1.35)+
+  annotate("text",
+           x = -130,
+           y = 1.2,
+           label = str_c("rate = ", slope, "‰/kyr"),
+           size = 4,
+           fontface = "bold")+
+  theme_minimal()+
+  labs(title="δ13C during the POE", subtitle="Data from Jiang et al. 2025", x="kyr relative to onset of PETM", y="δ13C ‰", color="Phase") +
+  scale_color_manual(
+    values = c(
+      "POE" = "#E69F00",
+      "NoPhase" = "darkgray"
+    ),
+    breaks = c("POE")) +
+    theme(plot.title = element_text(face = "bold")) 
+
+
+```
 
 
