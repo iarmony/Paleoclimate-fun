@@ -119,7 +119,9 @@ temp_land <- temp_land%>%
   mutate(Date = str_c(str_extract(Date, "\\d{4}"), str_extract(Date, "(?<=\\d{4}).*"), sep = "-"),
          Date = ym(Date))
 
-co2 <- read_csv("../Data/Modern/co2_annmean_mlo.csv", skip = 43)
+co2 <- read_csv("../Data/Modern/monthly_in_situ_co2_mlo.csv", skip = 61) #Column 5 is what we want
+monthly_O18 <- read_csv("../Data/Modern/monthly_flask_o18_mlo.csv", skip = 58) #Column 5 is what we want
+monthly_C13 <- read_csv("../Data/Modern/monthly_flask_c13_mlo.csv", skip = 58) #Column 5 is what we want
 ```
 
 
