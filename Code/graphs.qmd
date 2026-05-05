@@ -277,6 +277,7 @@ bulk_carbonate_joined_POE%>%
     breaks = c("POE")) +
     theme(plot.title = element_text(face = "bold")) 
 
+comparison_petm_poe <- slope_poe/(slope_PETM)
 
 ```
 
@@ -321,5 +322,6 @@ bulk_carbonate_joined_PETM%>%
     ),
     breaks = c("PETM onset", "PETM")) +
     theme(plot.title = element_text(face = "bold")) 
+
 ```
 
