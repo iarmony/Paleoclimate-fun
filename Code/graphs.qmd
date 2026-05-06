@@ -145,8 +145,6 @@ temp_land <- temp_land%>%
 co2 <- read_csv("../Data/Modern/monthly_in_situ_co2_mlo.csv", skip = 61) #Column 5 is what we want
 monthly_O18 <- read_csv("../Data/Modern/monthly_flask_o18_mlo.csv", skip = 58) #Column 5 is what we want
 monthly_C13 <- read_csv("../Data/Modern/monthly_flask_c13_mlo.csv", skip = 58) #Column 5 is what we want
-
-
 ```
 
 
@@ -157,6 +155,7 @@ monthly_C13 <- read_csv("../Data/Modern/monthly_flask_c13_mlo.csv", skip = 58) #
 ### Modern
 
 ```{r}
+#13C
 monthly_C13 <- monthly_C13[-1:-2,]%>%
   mutate(delta_13_c = `13C...5`,
          numeric_date = Date...4)%>%
@@ -173,19 +172,74 @@ monthly_C13_rate <- monthly_C13%>%
 
 monthly_C13_rate%>%
   ggplot(aes(x = Yr, y = avg_c13))+
+  geom_point(color="red3")+
+  theme_minimal() +
+  labs(title="Modern Atmospheric δ13C since 1980", subtitle="Data from Mauna Loa Observatory, Hawaii", x="Year", y="δ13C ‰") +
+  theme(plot.title = element_text(face = "bold")) 
+
+#18O
+monthly_O18 <- monthly_O18[-1:-2,]%>%
+  mutate(delta_18_o = `18O...5`,
+         numeric_date = Date...4)%>%
+  select(Yr, Mn, numeric_date, delta_18_o)
+
+monthly_O18_rate <- monthly_O18 %>%
+  filter(delta_18_o != "NaN")%>%
+  mutate(delta_18_o = as.numeric(delta_18_o),
+         monthly_rate_change = delta_18_o - lag(delta_18_o, 1))%>%
+  mutate(date = as_date(date_decimal(numeric_date)))%>%
+  group_by(Yr)%>%
+  summarize(avg_18O = mean(delta_18_o))%>%
+  mutate(yearly_rate_change = avg_18O - lag(avg_18O, 1))
+
+monthly_O18_rate%>%
+  ggplot(aes(x = Yr, y = avg_18O))+
   geom_point()+
   theme_minimal()
+```
+
+
+```{r}
+monthly_C13 <- monthly_C13[-1:-2,]%>%
+  mutate(delta_13_c = `13C...5`,
+         numeric_date = Date...4)%>%
+  select(Yr, Mn, numeric_date, delta_13_c)
+
+monthly_C13_rate <- monthly_C13%>%
+  filter(delta_13_c != "NaN")%>%
+  mutate(delta_13_c = as.numeric(delta_13_c),
+         monthly_rate_change = delta_13_c - lag(delta_13_c, 1))%>%
+  mutate(date = as_date(date_decimal(numeric_date)))%>%
+  group_by(Yr)%>%
+  summarize(avg_c13 = mean(delta_13_c))%>%
+  mutate(yearly_rate_change = avg_c13 - lag(avg_c13, 1))
+
+modern_model <- lm(avg_c13 ~ Yr, data = monthly_C13_rate)
+
+regression_modern <- monthly_C13_rate%>%
+  mutate(predicted_c13 = fitted(modern_model))
+
+slope_modern <- round(coef(modern_model)[2], 3)
+
+monthly_C13_rate%>%
+  ggplot(aes(x = Yr, y = avg_c13))+
+  geom_point()+
+  geom_line(aes(x = Yr, y = predicted_c13), data = regression_modern)+
+  annotate("text",
+           x = 2005,
+           y = -7.8,
+           label = str_c("rate = ", slope_modern, "‰/yr"),
+           size = 4,
+           fontface = "bold")+
+  theme_minimal()+
+  labs(title="δ13C from 1980 to Present", subtitle="Data from Mauna Loa Observatory, Hawaii", x="Year", y="δ13C ‰")+
+  theme(plot.title = element_text(face = "bold")) 
+
 ```
 
 ### POE
 
 ```{r}
-bulk_carbonate_joined%>%
-  filter(Comment == "POE")%>%
-  ggplot(aes(x = age_model_1, y = δ13Ccarb))+
-  geom_point()+
-  theme_minimal()
-
 bulk_carbonate_joined_POE <- bulk_carbonate_joined[7:37, ]
 
 bulk_carbonate_joined_POE%>%
@@ -200,7 +254,7 @@ poe_model <- lm(δ13Ccarb ~ age_model_1, data = regression_POE)
 regression_POE <- regression_POE%>%
   mutate(predicted_c13 = fitted(poe_model))
 
-slope <- round(coef(poe_model)[2], 3)
+slope_poe <- round(coef(poe_model)[2], 3)
 
 bulk_carbonate_joined_POE%>%
   mutate(Comment2 = coalesce(Comment, "NoPhase"))%>%
@@ -210,7 +264,7 @@ bulk_carbonate_joined_POE%>%
   annotate("text",
            x = -130,
            y = 1.2,
-           label = str_c("rate = ", slope, "‰/kyr"),
+           label = str_c("rate = ", format(slope_poe/1000, scientific = FALSE), "‰/yr"),
            size = 4,
            fontface = "bold")+
   theme_minimal()+
@@ -223,7 +277,51 @@ bulk_carbonate_joined_POE%>%
     breaks = c("POE")) +
     theme(plot.title = element_text(face = "bold")) 
 
+comparison_petm_poe <- slope_poe/(slope_PETM)
 
 ```
 
+### PETM
+
+```{r}
+bulk_carbonate_joined%>%
+  filter(Comment == "PETM" | Comment == "PETM onset")%>%
+  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment))+
+  geom_point()+
+  theme_minimal()
+
+bulk_carbonate_joined_PETM <- bulk_carbonate_joined[91:213, ]
+
+regression_PETM <- bulk_carbonate_joined_PETM[12:91, ]
+
+PETM_model <- lm(δ13Ccarb ~ age_model_1, data = regression_PETM)
+
+regression_PETM <- regression_PETM%>%
+  mutate(predicted_c13 = predict(PETM_model, newdata = regression_PETM))
+
+slope_PETM <- round(coef(PETM_model)[2], 3)
+
+bulk_carbonate_joined_PETM%>%
+  mutate(Comment2 = coalesce(Comment, "NoPhase"))%>%
+  ggplot(aes(x = age_model_1, y = δ13Ccarb, color = Comment2))+
+  geom_point(size = 2)+
+  geom_line(aes(x = age_model_1, y = predicted_c13), data = regression_PETM, color = "#0072B2", linewidth = 1.35)+
+  annotate("text",
+           x = 70,
+           y = -1.75,
+           label = str_c("rate = ", format(slope_PETM/1000, scientific = FALSE), "‰/yr"),
+           size = 4,
+           fontface = "bold")+
+  theme_minimal()+
+  labs(title="δ13C during the PETM", subtitle="Data from Jiang et al. 2025", x="kyr relative to onset of PETM", y="δ13C ‰", color="Phase") +
+  scale_color_manual(
+    values = c(
+      "PETM" = "#0072B2",
+      "PETM onset" = "#009E73",
+      "NoPhase" = "darkgray"
+    ),
+    breaks = c("PETM onset", "PETM")) +
+    theme(plot.title = element_text(face = "bold")) 
+
+```
 
